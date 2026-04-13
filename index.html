@@ -348,6 +348,25 @@ footer {
   color: rgba(255,255,255,0.5); font-size: 14px; text-decoration: none; transition: all 0.2s;
 }
 .footer-social a:hover { color: #00E87A; border-color: rgba(0,232,122,0.4); background: rgba(0,232,122,0.08); }
+.footer-contato-mobile {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 4px;
+}
+.footer-contato-mobile a,
+.footer-contato-mobile span {
+  font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none;
+  display: flex; align-items: center; gap: 8px; transition: color 0.2s;
+}
+.footer-contato-mobile a i { color: #00E87A; }
+.footer-contato-mobile a:first-child i { color: #25D366; }
+.footer-contato-mobile span i { color: #00E87A; }
+.footer-contato-mobile a:hover { color: #fff; }
 
 /* MOBILE */
 @media (max-width: 768px) {
@@ -373,22 +392,19 @@ footer {
     justify-content: flex-start;
   }
 
-  /* Perfil horizontal no mobile: foto pequena + nome/contatos lado a lado */
+  /* Perfil centralizado no mobile (sem card de contatos) */
   .profile-info {
     flex: none; width: 100%; min-width: auto;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 8px;
+    flex-direction: column;
+    align-items: center;
   }
-
   .perfil-card-topo {
-    flex: 0 0 auto;
-    padding: 10px 12px;
+    width: 100%;
+    flex: none;
+    padding: 12px 16px;
     border-radius: 16px;
     gap: 6px;
-    justify-content: center;
   }
-  .perfil-card-topo::before { display: none; }
 
   #profile-canvas-container {
     width: 72px; height: 72px;
@@ -400,20 +416,7 @@ footer {
   .profile-subtitle { font-size: 9px; letter-spacing: 0.18em; }
   .creci-badge { font-size: 10px; padding: 3px 12px; }
 
-  .perfil-card-contatos {
-    flex: 1;
-    margin-top: 0;
-    padding: 8px 12px;
-    border-radius: 16px;
-    gap: 0;
-    justify-content: center;
-  }
-  .contato-label { margin-bottom: 4px; font-size: 9px; }
-  .contato-item { padding: 6px 0; }
-  .contato-icon { width: 28px; height: 28px; border-radius: 8px; }
-  .contato-icon i { font-size: 12px; }
-  .contato-text-label { font-size: 9px; }
-  .contato-text-value { font-size: 12px; }
+  .perfil-card-contatos { display: none; }
 
   /* Carrossel cresce para preencher o restante */
   .carousel-wrapper {
@@ -448,6 +451,7 @@ footer {
   .strip-arrow { width: 38px; height: 38px; }
 
   footer { flex-direction: column; text-align: center; align-items: center; }
+  .footer-contato-mobile { display: flex; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .nav-whatsapp { padding: 8px 12px; gap: 0; }
@@ -590,6 +594,12 @@ footer {
     <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
     <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
     <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+  <!-- Contato mobile: só aparece em telas pequenas -->
+  <div class="footer-contato-mobile">
+    <a href="https://wa.me/5566996915943" target="_blank"><i class="fab fa-whatsapp"></i> (66) 99670-0226</a>
+    <a href="mailto:josueafonsocorretor@gmail.com"><i class="fas fa-envelope"></i> josueafonsocorretor@gmail.com</a>
+    <span><i class="fas fa-map-marker-alt"></i> Mato Grosso — Brasil</span>
   </div>
 </footer>
 
