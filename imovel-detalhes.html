@@ -2,418 +2,449 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Cobertura Duplex — Bairro Alto, Cuiabá | Background Video Fixo</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cobertura Duplex — Bairro Alto, Cuiabá</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-/* ── TOKENS ────────────────── */
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
 :root {
   --green:        #00E87A;
-  --green-light:  rgba(0,232,122,0.12);
+  --green-dim:    rgba(0,232,122,0.12);
   --green-border: rgba(0,232,122,0.28);
-  --bg-glass:     rgba(6,6,8,0.68);
-  --surface:      rgba(12,12,16,0.55);
-  --surface-2:    rgba(20,20,28,0.65);
-  --border:       rgba(255,255,255,0.08);
-  --border-2:     rgba(255,255,255,0.14);
+  --border:       rgba(255,255,255,0.09);
+  --surface:      rgba(10,10,16,0.60);
+  --surface2:     rgba(18,18,26,0.65);
   --text:         #edeae2;
-  --text-2:       rgba(255,255,255,0.68);
-  --text-3:       rgba(255,255,255,0.4);
-  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
-  --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-xl: 32px; --r-pill: 999px;
+  --text2:        rgba(255,255,255,0.65);
+  --text3:        rgba(255,255,255,0.38);
+
+  --gap-xs: 6px;
+  --gap-sm: 10px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+  --gap-xl: 36px;
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-pill: 999px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; background: #000; }
-
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; background: #060608; }
 body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text);
-  background: transparent;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-  z-index: 2;
+  padding-bottom: 72px; /* space for mobile bottom bar */
 }
 
-/* ========== FIXED BACKGROUND VIDEO ========== */
-.video-background-fixed {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; z-index: -2; pointer-events: none;
+/* ═══════════════════════════════════════════
+   BACKGROUND VIDEO
+═══════════════════════════════════════════ */
+.bg-video {
+  position: fixed; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover; pointer-events: none;
 }
-.video-overlay-dark {
-  position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
-  backdrop-filter: blur(1px); z-index: -1; pointer-events: none;
+.bg-overlay {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse at 25% 20%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.88) 100%);
 }
 
-/* ========== TOPBAR ========== */
+/* ═══════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════ */
 .topbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 60px; display: flex; align-items: center;
-  justify-content: space-between; padding: 0 var(--s6);
-  background: rgba(6,6,8,0.6);
-  backdrop-filter: blur(20px) saturate(1.6);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--gap-md);
+  background: rgba(6,6,10,0.72);
+  backdrop-filter: blur(18px) saturate(1.5);
   border-bottom: 1px solid var(--border);
 }
 .back-btn {
-  display: inline-flex; align-items: center; gap: var(--s2);
-  padding: var(--s2) var(--s4); background: var(--surface-2);
-  border: 1px solid var(--border); border-radius: var(--r-pill);
-  font-size: 13px; font-weight: 500; color: var(--text-2);
-  cursor: pointer; text-decoration: none; transition: background 0.18s, color 0.18s;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 500;
+  color: var(--text2); text-decoration: none;
+  transition: color .18s, background .18s;
 }
-.back-btn:hover { background: rgba(255,255,255,0.12); color: var(--text); }
-
+.back-btn:hover { color: var(--text); background: rgba(255,255,255,0.10); }
 .topbar-status {
-  display: flex; align-items: center; gap: var(--s2);
-  font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--green);
+  display: none;
+  align-items: center; gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--green);
 }
 .status-dot {
   width: 6px; height: 6px; border-radius: 50%; background: var(--green);
-  animation: blink 2.4s ease-in-out infinite;
+  animation: pulse 2.4s ease-in-out infinite;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
 .topbar-cta {
-  display: inline-flex; align-items: center; gap: var(--s2);
-  padding: var(--s2) var(--s5); background: var(--green-light);
-  border: 1px solid var(--green-border); border-radius: var(--r-pill);
-  font-size: 13px; font-weight: 600; color: var(--green);
-  text-decoration: none; cursor: pointer; transition: background 0.18s, color 0.18s;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600;
+  color: var(--green); text-decoration: none;
+  transition: background .18s, color .18s;
 }
 .topbar-cta:hover { background: var(--green); color: #000; }
 
-/* ========== HERO ========== */
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
 .hero {
-  margin-top: 60px; position: relative;
-  height: 62vh; min-height: 460px; max-height: 680px;
+  margin-top: 52px; position: relative;
+  height: 56vw; min-height: 280px; max-height: 480px;
   overflow: hidden;
-  border-radius: 0 0 var(--r-lg) var(--r-lg);
-  box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
 }
 .hero-img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.72) saturate(0.9);
-  transform: scale(1); transition: transform 9s ease, opacity 0.35s ease;
-  will-change: transform;
+  filter: brightness(.72) saturate(.9); transition: opacity .3s;
 }
-.hero:hover .hero-img { transform: scale(1.03); }
-
-/* Gradient layers — stronger on left for title, stronger on right bottom for price */
 .hero-gradient {
   position: absolute; inset: 0;
-  background:
-    linear-gradient(to top,  rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 38%, rgba(0,0,0,0.12) 70%, transparent 100%),
-    linear-gradient(to right, rgba(0,0,0,0.50) 0%, transparent 55%);
+  background: linear-gradient(to top,
+    rgba(0,0,0,.92) 0%, rgba(0,0,0,.50) 35%,
+    rgba(0,0,0,.10) 65%, transparent 100%);
 }
-
 .g-counter {
-  position: absolute; top: var(--s5); left: var(--s5); z-index: 10;
-  padding: 5px 14px; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
+  position: absolute; top: var(--gap-md); left: var(--gap-md); z-index: 10;
+  padding: 4px 12px;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(8px);
   border: 1px solid var(--border); border-radius: var(--r-pill);
-  font-family: 'Barlow Condensed', sans-serif; font-size: 12px;
-  letter-spacing: 0.1em; color: var(--text-2);
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: .1em; color: var(--text2);
 }
 .g-arrows {
   position: absolute; top: 50%; transform: translateY(-50%);
   width: 100%; display: flex; justify-content: space-between;
-  padding: 0 var(--s4); z-index: 10; pointer-events: none;
+  padding: 0 var(--gap-sm); z-index: 10; pointer-events: none;
 }
 .g-arrow {
-  pointer-events: all; width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
+  pointer-events: all; width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(6px);
   border: 1px solid var(--green-border);
   display: flex; align-items: center; justify-content: center;
-  color: rgba(255,255,255,0.8); font-size: 15px; cursor: pointer;
-  transition: background 0.18s, color 0.18s;
+  color: rgba(255,255,255,.8); font-size: 13px; cursor: pointer;
+  transition: background .18s, color .18s;
 }
 .g-arrow:hover { background: var(--green); color: #000; border-color: var(--green); }
+/* thumbs shown only on desktop */
+.g-thumbs { display: none; position: absolute; bottom: var(--gap-lg); right: var(--gap-lg); gap: var(--gap-sm); z-index: 10; }
+.g-thumb { width: 60px; height: 42px; border-radius: var(--r-sm); overflow: hidden; border: 2px solid rgba(255,255,255,.22); cursor: pointer; transition: border-color .18s; }
+.g-thumb img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.65); transition: filter .18s; }
+.g-thumb.active, .g-thumb:hover { border-color: var(--green); }
+.g-thumb.active img, .g-thumb:hover img { filter: brightness(1); }
 
-/* ── HERO CONTENT: stack title (left) + price (right) no bottom ── */
-.hero-content {
+/* hero bottom info — stacked on mobile, row on tablet+ */
+.hero-info {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
-  /* reserve right space so price doesn't crash into thumbnails */
-  padding: 0 var(--s7) var(--s6);
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--s6);
+  padding: var(--gap-md);
+  display: flex; flex-direction: column; gap: var(--gap-xs);
 }
-
-.hero-left { flex: 1; min-width: 0; }
 .hero-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; background: rgba(0,232,122,0.18);
-  border: 1px solid var(--green-border); border-radius: var(--r-pill);
-  font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--green); margin-bottom: var(--s3);
-  backdrop-filter: blur(4px);
+  display: inline-flex; align-items: center; gap: 5px; width: fit-content;
+  padding: 3px 10px; background: rgba(0,232,122,.18); border: 1px solid var(--green-border);
+  border-radius: var(--r-pill); font-size: 9px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--green);
 }
 .hero-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.6rem, 6vw, 5rem);
-  letter-spacing: 0.04em; line-height: 0.92; color: #fff;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  font-size: clamp(1.8rem, 8vw, 4rem);
+  letter-spacing: .04em; line-height: .92; color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,.6);
 }
 .hero-loc {
-  display: flex; align-items: center; gap: 6px; margin-top: var(--s3);
-  font-family: 'Barlow Condensed', sans-serif; font-size: 14px;
-  letter-spacing: 0.16em; color: #b5f0d4;
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; letter-spacing: .14em; color: #aaeece;
 }
-
-/* ── PRICE block — right side, above thumbnails ── */
-.hero-right {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  /* push price up so thumbs (bottom:24px right:24px) don't collide */
-  padding-bottom: 64px;
-}
-.price-eyebrow {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--text-3); margin-bottom: var(--s1);
-}
+.hero-price-block { margin-top: 4px; }
 .price-main {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2rem, 4vw, 3.4rem);
-  letter-spacing: 0.03em; color: var(--green); line-height: 1;
-  text-shadow: 0 0 28px rgba(0,232,122,0.35);
+  font-size: clamp(1.6rem, 7vw, 2.8rem);
+  letter-spacing: .03em; color: var(--green); line-height: 1;
+  text-shadow: 0 0 24px rgba(0,232,122,.35);
 }
-.price-sub { font-size: 11px; color: var(--text-3); margin-top: var(--s1); line-height: 1.6; text-align: right; }
+.price-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
-/* ── thumbnails ── */
-.g-thumbs {
-  position: absolute; bottom: var(--s5); right: var(--s5);
-  display: flex; gap: var(--s2); z-index: 10;
+/* ═══════════════════════════════════════════
+   SPECS STRIP  (horizontal scroll)
+═══════════════════════════════════════════ */
+.specs-strip {
+  display: flex; gap: var(--gap-sm);
+  overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  padding: var(--gap-sm) var(--gap-md);
+  background: rgba(6,6,10,.55); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
 }
-.g-thumb {
-  width: 64px; height: 46px; border-radius: var(--r-sm); overflow: hidden;
-  border: 2px solid rgba(255,255,255,0.25); cursor: pointer;
-  transition: border-color 0.18s, transform 0.1s;
+.specs-strip::-webkit-scrollbar { display: none; }
+.spec-pill {
+  flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-pill); font-size: 12px; font-weight: 500; color: var(--text2); white-space: nowrap;
 }
-.g-thumb img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: filter 0.18s; }
-.g-thumb:hover, .g-thumb.active { border-color: var(--green); transform: scale(1.02); }
-.g-thumb:hover img, .g-thumb.active img { filter: brightness(1); }
+.spec-pill i { color: var(--green); font-size: 11px; }
 
-/* ========== MAIN CONTENT ========== */
+/* ═══════════════════════════════════════════
+   PAGE BODY
+═══════════════════════════════════════════ */
 .page-body {
-  position: relative; z-index: 8;
-  max-width: 1280px; margin: 0 auto;
-  padding: var(--s7) var(--s6) 100px;
-  display: grid; grid-template-columns: 1fr 340px; gap: var(--s7);
+  max-width: 1240px; margin: 0 auto;
+  padding: var(--gap-lg) var(--gap-md) var(--gap-xl);
+  display: grid; grid-template-columns: 1fr; gap: var(--gap-xl);
 }
 
-.specs-bar {
-  display: flex; gap: var(--s3); flex-wrap: wrap;
-  padding: var(--s5); background: rgba(8,8,12,0.55);
-  backdrop-filter: blur(12px); border: 1px solid var(--border);
-  border-radius: var(--r-lg); margin-bottom: var(--s7);
-}
-.spec-item {
-  display: flex; align-items: center; gap: var(--s2);
-  padding: var(--s2) var(--s4); background: rgba(20,22,28,0.6);
-  border: 1px solid var(--border); border-radius: var(--r-pill);
-  font-size: 13px; font-weight: 500; color: var(--text-2);
-  transition: all 0.18s; white-space: nowrap;
-}
-.spec-item:hover { border-color: var(--green-border); color: var(--text); background: rgba(0,232,122,0.1); }
-.spec-item i { color: var(--green); font-size: 13px; }
-
-.section { margin-bottom: var(--s7); }
-.section + .section { border-top: 1px solid var(--border); padding-top: var(--s7); }
+/* ═══════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════ */
+.section { display: flex; flex-direction: column; gap: var(--gap-md); }
+.section + .section { border-top: 1px solid var(--border); padding-top: var(--gap-xl); margin-top: var(--gap-xl); }
 .sec-label {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: var(--s3);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--green);
 }
-.sec-title {
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem;
-  letter-spacing: 0.04em; color: #fff; margin-bottom: var(--s5);
-}
-.desc-text { font-size: 15px; line-height: 1.8; color: var(--text-2); max-width: 68ch; }
-.desc-text + .desc-text { margin-top: var(--s5); }
+.sec-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.55rem; letter-spacing: .04em; color: #fff; }
+.desc-text { font-size: 14px; line-height: 1.8; color: var(--text2); }
 
-.rooms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); }
+/* ═══════════════════════════════════════════
+   ROOMS GRID
+═══════════════════════════════════════════ */
+.rooms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-sm); }
 .room-card {
-  background: rgba(12,12,18,0.55); backdrop-filter: blur(6px);
+  background: var(--surface); backdrop-filter: blur(6px);
   border: 1px solid var(--border); border-radius: var(--r-md);
-  padding: var(--s5) var(--s4); text-align: center;
-  transition: border-color 0.18s, transform 0.18s;
+  padding: var(--gap-md) var(--gap-sm);
+  display: flex; flex-direction: column; align-items: center; gap: var(--gap-xs); text-align: center;
+  transition: border-color .18s, transform .18s;
 }
-.room-card:hover { border-color: var(--green-border); transform: translateY(-3px); background: rgba(0,232,122,0.05); }
-.room-emoji { font-size: 22px; margin-bottom: var(--s2); }
-.room-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--green); line-height: 1; }
-.room-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-3); margin-top: var(--s1); }
+.room-card:hover { border-color: var(--green-border); transform: translateY(-2px); }
+.room-icon {
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  background: var(--green-dim); border: 1px solid var(--green-border); border-radius: var(--r-sm);
+}
+.room-icon i { font-size: 13px; color: var(--green); }
+.room-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--green); line-height: 1; }
+.room-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); }
 
-.features-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--s2); }
+/* ═══════════════════════════════════════════
+   FEATURES GRID
+═══════════════════════════════════════════ */
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gap-xs); }
 .feat-item {
-  display: flex; align-items: center; gap: var(--s3);
-  padding: var(--s3) var(--s4); background: rgba(6,6,10,0.6);
-  backdrop-filter: blur(4px); border: 1px solid var(--border);
-  border-radius: var(--r-sm); font-size: 13px; font-weight: 500; color: var(--text-2);
-  transition: all 0.18s;
+  display: flex; align-items: center; gap: var(--gap-sm);
+  padding: 10px var(--gap-sm); background: var(--surface); backdrop-filter: blur(4px);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  font-size: 12px; font-weight: 500; color: var(--text2); transition: border-color .18s, background .18s;
 }
-.feat-item:hover { border-color: var(--green-border); color: var(--text); background: rgba(0,232,122,0.12); }
-.feat-item i { color: var(--green); font-size: 13px; width: 16px; text-align: center; }
+.feat-item:hover { border-color: var(--green-border); background: rgba(0,232,122,.08); color: var(--text); }
+.feat-item i { color: var(--green); font-size: 12px; width: 14px; text-align: center; flex-shrink: 0; }
 
+/* ═══════════════════════════════════════════
+   VIDEO BLOCK
+═══════════════════════════════════════════ */
 .video-block {
-  position: relative; border-radius: var(--r-lg); overflow: hidden;
-  height: 260px; cursor: pointer; border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);
-}
-.video-bg {
-  position: absolute; inset: 0; background-size: cover; background-position: center;
-  filter: brightness(0.5); transition: filter 0.3s;
-}
-.video-block:hover .video-bg { filter: brightness(0.7); }
-.video-ui { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: var(--s3); }
-.play-circle {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: rgba(0,232,122,0.2); border: 1.5px solid var(--green);
+  position: relative; border-radius: var(--r-lg); overflow: hidden; height: 200px;
+  cursor: pointer; border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s, transform 0.2s;
 }
-.video-block:hover .play-circle { background: var(--green); transform: scale(1.08); }
-.play-circle i { font-size: 24px; color: var(--green); margin-left: 3px; transition: color 0.2s; }
+.video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(.45); transition: filter .3s; }
+.video-block:hover .video-bg { filter: brightness(.65); }
+.video-ui { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: var(--gap-sm); }
+.play-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(0,232,122,.18); border: 1.5px solid var(--green);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .2s;
+}
+.video-block:hover .play-circle { background: var(--green); transform: scale(1.06); }
+.play-circle i { font-size: 20px; color: var(--green); margin-left: 3px; transition: color .2s; }
 .video-block:hover .play-circle i { color: #000; }
-.video-label { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 0.18em; color: var(--text-2); }
+.video-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .16em; color: var(--text2); }
 
+/* ═══════════════════════════════════════════
+   MAP BLOCK
+═══════════════════════════════════════════ */
 .map-block {
-  position: relative; height: 200px; border-radius: var(--r-lg); overflow: hidden;
-  background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+  position: relative; height: 180px; border-radius: var(--r-lg); overflow: hidden;
+  background: rgba(0,0,0,.4); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
 }
 .map-grid {
   position: absolute; inset: 0;
-  background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(0,232,122,0.06) 40px),
-              repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(0,232,122,0.06) 40px);
+  background: repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(0,232,122,.05) 40px),
+              repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(0,232,122,.05) 40px);
 }
 .map-pin-ui { position: relative; z-index: 2; text-align: center; }
-.map-pin-ui i { font-size: 36px; color: var(--green); filter: drop-shadow(0 0 12px rgba(0,232,122,0.5)); }
-.map-pin-ui p { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 0.12em; color: var(--text-2); margin-top: var(--s2); }
+.map-pin-ui i { font-size: 30px; color: var(--green); filter: drop-shadow(0 0 10px rgba(0,232,122,.5)); }
+.map-pin-ui p { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .1em; color: var(--text2); margin-top: 6px; }
 .map-open {
-  position: absolute; bottom: var(--s4); right: var(--s4);
-  padding: 7px 16px; border-radius: var(--r-pill);
-  background: rgba(0,232,122,0.2); border: 1px solid var(--green-border);
-  font-size: 12px; font-weight: 600; color: var(--green); text-decoration: none;
-  backdrop-filter: blur(4px); transition: background 0.18s, color 0.18s;
+  position: absolute; bottom: var(--gap-sm); right: var(--gap-sm);
+  padding: 6px 14px; border-radius: var(--r-pill);
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  font-size: 11px; font-weight: 600; color: var(--green); text-decoration: none;
+  backdrop-filter: blur(4px); transition: background .18s, color .18s;
 }
 .map-open:hover { background: var(--green); color: #000; }
 
-.similar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); }
+/* ═══════════════════════════════════════════
+   SIMILAR CARDS  (horizontal on mobile)
+═══════════════════════════════════════════ */
+.similar-grid { display: grid; grid-template-columns: 1fr; gap: var(--gap-md); }
 .sim-card {
-  background: rgba(10,10,15,0.6); backdrop-filter: blur(6px);
-  border: 1px solid var(--border); border-radius: var(--r-md);
-  overflow: hidden; cursor: pointer;
-  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  background: var(--surface); backdrop-filter: blur(6px);
+  border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; cursor: pointer;
+  display: grid; grid-template-columns: 100px 1fr;  /* image left, info right */
+  transition: border-color .2s, transform .2s, box-shadow .2s;
 }
-.sim-card:hover { border-color: var(--green-border); transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,0.5); }
-.sim-img { width: 100%; height: 120px; object-fit: cover; filter: brightness(0.7); transition: filter 0.2s; display: block; }
-.sim-card:hover .sim-img { filter: brightness(0.9); }
-.sim-info { padding: var(--s4); }
-.sim-name { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.03em; margin-bottom: var(--s1); }
-.sim-loc { font-size: 11px; color: var(--text-3); margin-bottom: var(--s2); }
-.sim-price { font-size: 15px; font-weight: 700; color: var(--green); }
+.sim-card:hover { border-color: var(--green-border); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.5); }
+.sim-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.7); transition: filter .2s; display: block; min-height: 80px; }
+.sim-card:hover .sim-img { filter: brightness(.9); }
+.sim-info { padding: var(--gap-md); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+.sim-name { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+.sim-loc { font-size: 11px; color: var(--text3); }
+.sim-price { font-size: 15px; font-weight: 700; color: var(--green); margin-top: 4px; }
 
-/* ========== SIDEBAR ========== */
-.sidebar { display: flex; flex-direction: column; gap: var(--s4); }
-.sidebar-inner { position: sticky; top: 76px; display: flex; flex-direction: column; gap: var(--s4); }
+/* ═══════════════════════════════════════════
+   SIDEBAR / CONTACT CARD
+═══════════════════════════════════════════ */
+.sidebar { display: flex; flex-direction: column; gap: var(--gap-md); }
+.sidebar-inner { display: flex; flex-direction: column; gap: var(--gap-md); }
 .s-card {
-  background: rgba(8,8,14,0.6); backdrop-filter: blur(18px);
-  border: 1px solid var(--border); border-radius: var(--r-xl); padding: var(--s6);
+  background: rgba(8,8,14,.62); backdrop-filter: blur(18px);
+  border: 1px solid var(--border); border-radius: var(--r-lg); padding: var(--gap-lg);
 }
-.agent-row { display: flex; align-items: center; gap: var(--s4); margin-bottom: var(--s5); }
+.agent-row { display: flex; align-items: center; gap: var(--gap-md); margin-bottom: var(--gap-lg); }
 .agent-av {
-  width: 52px; height: 52px; border-radius: var(--r-md); flex-shrink: 0;
+  width: 48px; height: 48px; border-radius: var(--r-sm); flex-shrink: 0;
   background: linear-gradient(135deg, #1e3a2b, #0a1f12); border: 1.5px solid var(--green-border);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--green);
+  font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--green);
 }
-.agent-name { font-size: 16px; font-weight: 700; line-height: 1.2; }
-.agent-role { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-3); margin-top: 2px; }
+.agent-name { font-size: 15px; font-weight: 700; line-height: 1.2; }
+.agent-role { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-top: 2px; }
 .agent-creci {
-  display: inline-flex; align-items: center; gap: 4px; margin-top: var(--s2);
-  padding: 3px 10px; border-radius: var(--r-pill);
-  background: rgba(0,232,122,0.15); border: 1px solid var(--green-border);
-  font-size: 10px; font-weight: 700; color: var(--green);
+  display: inline-flex; align-items: center; gap: 4px; margin-top: 6px;
+  padding: 3px 9px; border-radius: var(--r-pill);
+  background: var(--green-dim); border: 1px solid var(--green-border);
+  font-size: 9px; font-weight: 700; color: var(--green);
 }
 .btn-primary {
-  width: 100%; padding: 14px;
+  width: 100%; padding: 13px; border: none; border-radius: var(--r-pill);
   background: linear-gradient(96deg, #00E87A, #00b85f);
-  border: none; border-radius: var(--r-pill);
-  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700;
-  color: #040f07; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: var(--s2);
-  transition: transform 0.18s, box-shadow 0.18s, filter 0.18s; margin-bottom: var(--s3);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; color: #040f07;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .18s, box-shadow .18s, filter .18s; margin-bottom: var(--gap-sm);
 }
-.btn-primary:hover { transform: scale(1.015); filter: brightness(1.05); box-shadow: 0 8px 24px rgba(0,232,122,0.3); }
+.btn-primary:hover { transform: scale(1.015); filter: brightness(1.06); box-shadow: 0 8px 22px rgba(0,232,122,.3); }
 .btn-secondary {
-  width: 100%; padding: 13px;
-  background: rgba(30,34,44,0.7); border: 1px solid var(--border);
-  border-radius: var(--r-pill); font-size: 14px; font-weight: 600;
-  color: var(--text-2); cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: var(--s2);
-  transition: background 0.18s, color 0.18s;
+  width: 100%; padding: 12px; background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600; color: var(--text2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .18s, color .18s;
 }
-.btn-secondary:hover { background: rgba(255,255,255,0.12); color: var(--text); }
-.s-divider { height: 1px; background: var(--border); margin: var(--s5) 0; }
-.info-list { display: flex; flex-direction: column; gap: 0; }
+.btn-secondary:hover { background: rgba(255,255,255,.1); color: var(--text); }
+.s-divider { height: 1px; background: var(--border); margin: var(--gap-md) 0; }
+.info-list { display: flex; flex-direction: column; }
 .info-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); }
 .info-row:last-child { border-bottom: none; }
-.info-lbl { font-size: 12px; color: var(--text-3); }
-.info-val { font-size: 13px; font-weight: 600; color: var(--text); }
-.info-val.accent { color: var(--green); }
-.share-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); margin-bottom: var(--s3); }
-.share-btns { display: flex; gap: var(--s2); }
+.info-lbl { font-size: 11px; color: var(--text3); }
+.info-val { font-size: 12px; font-weight: 600; color: var(--text); }
+.info-val.green { color: var(--green); }
+.share-label { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--text3); margin-bottom: var(--gap-sm); }
+.share-btns { display: flex; gap: var(--gap-sm); }
 .share-btn {
-  flex: 1; padding: 10px var(--s3);
-  background: rgba(25,28,35,0.7); border: 1px solid var(--border);
-  border-radius: var(--r-md); font-size: 12px; font-weight: 600;
-  color: var(--text-2); cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
-  transition: all 0.18s;
+  flex: 1; padding: 9px; border-radius: var(--r-sm);
+  background: var(--surface2); border: 1px solid var(--border);
+  font-size: 12px; font-weight: 600; color: var(--text2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 5px; transition: background .18s, border-color .18s, color .18s;
 }
-.share-btn:hover { background: rgba(0,232,122,0.15); color: var(--text); border-color: var(--green-border); }
+.share-btn:hover { background: var(--green-dim); border-color: var(--green-border); color: var(--text); }
 
-/* ========== RESPONSIVE ========== */
-@media (max-width: 960px) {
-  .page-body { grid-template-columns: 1fr; gap: var(--s6); }
-  .sidebar-inner { position: static; }
-  .hero-content { padding: 0 var(--s6) var(--s5); flex-direction: column; align-items: flex-start; gap: var(--s3); }
-  .hero-right { align-items: flex-start; padding-bottom: 0; }
-  .price-sub { text-align: left; }
-  .similar-grid { grid-template-columns: 1fr 1fr; }
+/* ═══════════════════════════════════════════
+   MOBILE STICKY BOTTOM BAR
+═══════════════════════════════════════════ */
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; gap: var(--gap-sm);
+  padding: var(--gap-sm) var(--gap-md);
+  background: rgba(6,6,10,.90); backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+}
+.bottom-bar .btn-primary { margin-bottom: 0; flex: 1; padding: 12px; font-size: 13px; }
+.bottom-bar .btn-call {
+  width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0;
+  background: var(--surface2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text2); font-size: 16px; cursor: pointer; transition: background .18s, color .18s;
+}
+.bottom-bar .btn-call:hover { background: rgba(255,255,255,.1); color: var(--text); }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+.hero        { animation: fadeUp .5s ease both; }
+.specs-strip { animation: fadeUp .5s .08s ease both; }
+.page-body   { animation: fadeUp .5s .14s ease both; }
+
+/* ═══════════════════════════════════════════
+   TABLET  ≥ 640px
+═══════════════════════════════════════════ */
+@media (min-width: 640px) {
+  .topbar-status { display: flex; }
+  .hero { height: 46vw; max-height: 520px; }
+
+  /* price moves right of title, offset up to clear thumbnails */
+  .hero-info { flex-direction: row; align-items: flex-end; justify-content: space-between; padding: var(--gap-lg) var(--gap-xl); }
+  .hero-price-block { text-align: right; margin-top: 0; padding-bottom: 58px; }
+  .price-sub { text-align: right; }
+
   .rooms-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 600px) {
-  .topbar { padding: 0 var(--s4); }
-  .g-thumbs { display: none; }
-  .hero-title { font-size: 2.4rem; }
-  .hero-content { padding: 0 var(--s4) var(--s5); }
-  .hero-right { padding-bottom: 0; }
-  .page-body { padding: var(--s5) var(--s4) 80px; }
-  .similar-grid { grid-template-columns: 1fr; }
-  .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* similar: vertical cards, 2 columns */
+  .similar-grid { grid-template-columns: repeat(2, 1fr); }
+  .sim-card { grid-template-columns: 1fr; }
+  .sim-img  { height: 130px; min-height: unset; }
+
+  /* hide mobile bottom bar */
+  .bottom-bar { display: none; }
+  body { padding-bottom: 0; }
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ═══════════════════════════════════════════
+   DESKTOP  ≥ 960px
+═══════════════════════════════════════════ */
+@media (min-width: 960px) {
+  .topbar { height: 60px; padding: 0 var(--gap-xl); }
+  .hero { height: 60vh; min-height: 440px; max-height: 640px; border-radius: 0 0 20px 20px; }
+  .hero-info { padding: var(--gap-xl) 52px; }
+  .g-thumbs { display: flex; }
+
+  .page-body { grid-template-columns: 1fr 320px; gap: 52px; padding: 48px var(--gap-xl) 80px; }
+  .sidebar-inner { position: sticky; top: 76px; }
+
+  .features-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .similar-grid  { grid-template-columns: repeat(3, 1fr); }
 }
-.hero, .page-body > * { animation: fadeUp 0.55s ease both; }
-.page-body > *:nth-child(2) { animation-delay: 0.12s; }
 </style>
 </head>
 <body>
 
-<video class="video-background-fixed" autoplay loop muted playsinline preload="auto">
+<video class="bg-video" autoplay loop muted playsinline preload="auto">
   <source src="background.mp4" type="video/mp4">
 </video>
-<div class="video-overlay-dark"></div>
+<div class="bg-overlay"></div>
 
 <!-- TOPBAR -->
 <nav class="topbar">
@@ -424,62 +455,60 @@ body {
   </a>
 </nav>
 
-<!-- HERO GALLERY -->
+<!-- HERO -->
 <section class="hero">
   <img class="hero-img" id="mainImg" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400" alt="Cobertura Duplex">
   <div class="hero-gradient"></div>
   <div class="g-counter" id="gCounter">1 / 5</div>
   <div class="g-arrows">
-    <button class="g-arrow" id="gPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
-    <button class="g-arrow" id="gNext" aria-label="Próxima"><i class="fas fa-chevron-right"></i></button>
+    <button class="g-arrow" id="gPrev"><i class="fas fa-chevron-left"></i></button>
+    <button class="g-arrow" id="gNext"><i class="fas fa-chevron-right"></i></button>
   </div>
-
-  <!-- thumbnails rendered by JS — stay bottom-right -->
   <div class="g-thumbs" id="gThumbs"></div>
-
-  <!-- title (left) + price (right), price offset upward to clear thumbs -->
-  <div class="hero-content">
-    <div class="hero-left">
-      <div class="hero-badge"><i class="fas fa-star"></i>&nbsp;Destaque</div>
+  <div class="hero-info">
+    <div>
+      <div class="hero-badge"><i class="fas fa-star"></i> Destaque</div>
       <h1 class="hero-title">Cobertura Duplex</h1>
       <div class="hero-loc"><i class="fas fa-map-marker-alt"></i> Bairro Alto, Cuiabá — MT</div>
     </div>
-    <div class="hero-right">
-      <div class="price-eyebrow">Valor de venda</div>
+    <div class="hero-price-block">
       <div class="price-main">R$ 1.250.000</div>
-      <div class="price-sub">IPTU: R$ 480/mês &nbsp;·&nbsp; Cond: R$ 1.200/mês</div>
+      <div class="price-sub">IPTU R$ 480/mês · Cond. R$ 1.200/mês</div>
     </div>
   </div>
 </section>
 
+<!-- SPECS STRIP -->
+<div class="specs-strip">
+  <div class="spec-pill"><i class="fas fa-ruler-combined"></i> 180 m² Útil</div>
+  <div class="spec-pill"><i class="fas fa-expand"></i> 230 m² Total</div>
+  <div class="spec-pill"><i class="fas fa-bed"></i> 3 Suítes</div>
+  <div class="spec-pill"><i class="fas fa-bath"></i> 3 Banheiros</div>
+  <div class="spec-pill"><i class="fas fa-car"></i> 3 Vagas</div>
+  <div class="spec-pill"><i class="fas fa-layer-group"></i> 2 Andares</div>
+</div>
+
+<!-- PAGE BODY -->
 <div class="page-body">
   <main>
-    <div class="specs-bar">
-      <div class="spec-item"><i class="fas fa-ruler-combined"></i> 180 m² Útil</div>
-      <div class="spec-item"><i class="fas fa-expand"></i> 230 m² Total</div>
-      <div class="spec-item"><i class="fas fa-bed"></i> 3 Suítes</div>
-      <div class="spec-item"><i class="fas fa-bath"></i> 3 Banheiros</div>
-      <div class="spec-item"><i class="fas fa-car"></i> 3 Vagas</div>
-      <div class="spec-item"><i class="fas fa-building"></i> 2 Andares</div>
-    </div>
 
     <div class="section">
       <div class="sec-label">Sobre o Imóvel</div>
       <div class="sec-title">Uma cobertura feita para poucos</div>
-      <p class="desc-text">Cobertura duplex de altíssimo padrão localizada no coração do Bairro Alto, um dos bairros mais valorizados de Cuiabá. Com acabamento premium e projeto arquitetônico exclusivo, esta propriedade oferece uma experiência de vida incomparável, combinando sofisticação e conforto em cada detalhe.</p>
-      <p class="desc-text">O imóvel conta com dois andares integrados, terraço privativo com vista panorâmica da cidade, piscina aquecida privativa e churrasqueira gourmet. A cozinha americana foi projetada com marcenaria sob medida e eletrodomésticos de alta performance.</p>
+      <p class="desc-text">Cobertura duplex de altíssimo padrão localizada no coração do Bairro Alto, um dos bairros mais valorizados de Cuiabá. Com acabamento premium e projeto arquitetônico exclusivo, esta propriedade oferece uma experiência de vida incomparável.</p>
+      <p class="desc-text">O imóvel conta com dois andares integrados, terraço privativo com vista panorâmica da cidade, piscina aquecida privativa e churrasqueira gourmet. Cozinha americana com marcenaria sob medida e eletrodomésticos de alta performance.</p>
     </div>
 
     <div class="section">
       <div class="sec-label">Plantas & Cômodos</div>
       <div class="sec-title">Distribuição</div>
       <div class="rooms-grid">
-        <div class="room-card"><div class="room-emoji">🛏️</div><div class="room-num">3</div><div class="room-lbl">Suítes</div></div>
-        <div class="room-card"><div class="room-emoji">🚿</div><div class="room-num">3</div><div class="room-lbl">Banheiros</div></div>
-        <div class="room-card"><div class="room-emoji">🚗</div><div class="room-num">3</div><div class="room-lbl">Vagas</div></div>
-        <div class="room-card"><div class="room-emoji">📐</div><div class="room-num">180</div><div class="room-lbl">m² úteis</div></div>
-        <div class="room-card"><div class="room-emoji">🏊</div><div class="room-num">1</div><div class="room-lbl">Piscina priv.</div></div>
-        <div class="room-card"><div class="room-emoji">🌆</div><div class="room-num">2</div><div class="room-lbl">Andares</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-bed"></i></div><div class="room-num">3</div><div class="room-lbl">Suítes</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-shower"></i></div><div class="room-num">3</div><div class="room-lbl">Banheiros</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-square-parking"></i></div><div class="room-num">3</div><div class="room-lbl">Vagas</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-vector-square"></i></div><div class="room-num">180</div><div class="room-lbl">m² úteis</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-water-ladder"></i></div><div class="room-num">1</div><div class="room-lbl">Piscina priv.</div></div>
+        <div class="room-card"><div class="room-icon"><i class="fas fa-layer-group"></i></div><div class="room-num">2</div><div class="room-lbl">Andares</div></div>
       </div>
     </div>
 
@@ -490,7 +519,7 @@ body {
         <div class="feat-item"><i class="fas fa-swimming-pool"></i> Piscina aquecida</div>
         <div class="feat-item"><i class="fas fa-fire"></i> Churrasqueira</div>
         <div class="feat-item"><i class="fas fa-shield-alt"></i> Segurança 24h</div>
-        <div class="feat-item"><i class="fas fa-wind"></i> Ar condicionado</div>
+        <div class="feat-item"><i class="fas fa-wind"></i> Ar-condicionado</div>
         <div class="feat-item"><i class="fas fa-dumbbell"></i> Academia</div>
         <div class="feat-item"><i class="fas fa-wifi"></i> Fibra óptica</div>
         <div class="feat-item"><i class="fas fa-elevator"></i> Elevador privativo</div>
@@ -505,9 +534,12 @@ body {
     <div class="section">
       <div class="sec-label">Experiência</div>
       <div class="sec-title">Tour Virtual 360°</div>
-      <div class="video-block" onclick="alert('📹 Tour virtual disponível — entre em contato para agendar uma demonstração imersiva!')">
+      <div class="video-block" onclick="alert('Tour virtual disponível — entre em contato!')">
         <div class="video-bg" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900')"></div>
-        <div class="video-ui"><div class="play-circle"><i class="fas fa-play"></i></div><span class="video-label">Assistir Tour 360°</span></div>
+        <div class="video-ui">
+          <div class="play-circle"><i class="fas fa-play"></i></div>
+          <span class="video-label">Assistir Tour 360°</span>
+        </div>
       </div>
     </div>
 
@@ -525,24 +557,46 @@ body {
       <div class="sec-label">Explore mais</div>
       <div class="sec-title">Imóveis Similares</div>
       <div class="similar-grid">
-        <div class="sim-card"><img class="sim-img" src="https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=600" alt="Apartamento Luxo"><div class="sim-info"><div class="sim-name">Apartamento Luxo</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Centro, Cuiabá</div><div class="sim-price">R$ 520.000</div></div></div>
-        <div class="sim-card"><img class="sim-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Casa com Piscina"><div class="sim-info"><div class="sim-name">Casa com Piscina</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Jardim Europa</div><div class="sim-price">R$ 890.000</div></div></div>
-        <div class="sim-card"><img class="sim-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600" alt="Flat Moderno"><div class="sim-info"><div class="sim-name">Flat Moderno</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Centro Norte</div><div class="sim-price">R$ 320.000</div></div></div>
+        <div class="sim-card">
+          <img class="sim-img" src="https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=600" alt="Apartamento Luxo">
+          <div class="sim-info"><div class="sim-name">Apartamento Luxo</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Centro, Cuiabá</div><div class="sim-price">R$ 520.000</div></div>
+        </div>
+        <div class="sim-card">
+          <img class="sim-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Casa com Piscina">
+          <div class="sim-info"><div class="sim-name">Casa com Piscina</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Jardim Europa</div><div class="sim-price">R$ 890.000</div></div>
+        </div>
+        <div class="sim-card">
+          <img class="sim-img" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600" alt="Flat Moderno">
+          <div class="sim-info"><div class="sim-name">Flat Moderno</div><div class="sim-loc"><i class="fas fa-map-marker-alt"></i> Centro Norte</div><div class="sim-price">R$ 320.000</div></div>
+        </div>
       </div>
     </div>
+
   </main>
 
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-inner">
       <div class="s-card">
-        <div class="agent-row"><div class="agent-av">JA</div><div><div class="agent-name">Josué Afonso</div><div class="agent-role">Corretor de Imóveis</div><div class="agent-creci"><i class="fas fa-registered"></i>&nbsp;CRECI MT 20998</div></div></div>
-        <button class="btn-primary" onclick="window.open('https://wa.me/5566996700226?text=Olá%20Josué!%20Tenho%20interesse%20na%20Cobertura%20Duplex%20no%20Bairro%20Alto.%20Gostaria%20de%20agendar%20uma%20visita.','_blank')"><i class="fab fa-whatsapp"></i> Agendar Visita</button>
-        <button class="btn-secondary" onclick="window.open('tel:+5566996700226')"><i class="fas fa-phone"></i> Ligar Agora</button>
+        <div class="agent-row">
+          <div class="agent-av">JA</div>
+          <div>
+            <div class="agent-name">Josué Afonso</div>
+            <div class="agent-role">Corretor de Imóveis</div>
+            <div class="agent-creci"><i class="fas fa-registered"></i> CRECI MT 20998</div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="window.open('https://wa.me/5566996700226?text=Olá%20Josué!%20Tenho%20interesse%20na%20Cobertura%20Duplex%20no%20Bairro%20Alto.','_blank')">
+          <i class="fab fa-whatsapp"></i> Agendar Visita
+        </button>
+        <button class="btn-secondary" onclick="window.open('tel:+5566996700226')">
+          <i class="fas fa-phone"></i> Ligar Agora
+        </button>
         <div class="s-divider"></div>
         <div class="info-list">
           <div class="info-row"><span class="info-lbl">Código</span><span class="info-val">#COB-2026-034</span></div>
           <div class="info-row"><span class="info-lbl">Tipo</span><span class="info-val">Cobertura Duplex</span></div>
-          <div class="info-row"><span class="info-lbl">Situação</span><span class="info-val accent">● Disponível</span></div>
+          <div class="info-row"><span class="info-lbl">Situação</span><span class="info-val green">● Disponível</span></div>
           <div class="info-row"><span class="info-lbl">IPTU / ano</span><span class="info-val">R$ 5.760</span></div>
           <div class="info-row"><span class="info-lbl">Condomínio</span><span class="info-val">R$ 1.200/mês</span></div>
           <div class="info-row"><span class="info-lbl">Publicado em</span><span class="info-val">Abr 2026</span></div>
@@ -550,12 +604,26 @@ body {
         <div class="s-divider"></div>
         <div class="share-label">Compartilhar</div>
         <div class="share-btns">
-          <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.innerHTML='<i class=\'fas fa-check\'></i> Copiado'"><i class="fas fa-link"></i> Link</button>
-          <button class="share-btn" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Vi este imóvel: '+window.location.href),'_blank')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+          <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copiado'">
+            <i class="fas fa-link"></i> Link
+          </button>
+          <button class="share-btn" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Vi este imóvel: '+window.location.href),'_blank')">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </button>
         </div>
       </div>
     </div>
   </aside>
+</div>
+
+<!-- MOBILE BOTTOM BAR -->
+<div class="bottom-bar">
+  <button class="btn-primary" onclick="window.open('https://wa.me/5566996700226?text=Olá%20Josué!%20Tenho%20interesse%20na%20Cobertura%20Duplex%20no%20Bairro%20Alto.','_blank')">
+    <i class="fab fa-whatsapp"></i> Agendar Visita
+  </button>
+  <button class="btn-call" onclick="window.open('tel:+5566996700226')">
+    <i class="fas fa-phone"></i>
+  </button>
 </div>
 
 <script>
@@ -567,8 +635,8 @@ body {
     "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1400"
   ];
   let current = 0;
-  const mainImg = document.getElementById('mainImg');
-  const counter = document.getElementById('gCounter');
+  const mainImg  = document.getElementById('mainImg');
+  const counter  = document.getElementById('gCounter');
   const thumbsEl = document.getElementById('gThumbs');
 
   images.forEach((src, i) => {
@@ -590,7 +658,7 @@ body {
   document.getElementById('gPrev').addEventListener('click', () => goTo(current - 1));
   document.getElementById('gNext').addEventListener('click', () => goTo(current + 1));
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') goTo(current - 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
     if (e.key === 'ArrowRight') goTo(current + 1);
   });
 </script>
