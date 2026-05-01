@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Josué Afonso | Corretor de Imóveis</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -15,6 +15,14 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+#imoveis, #buscar, #contato {
+  scroll-margin-top: 85px;
 }
 
 body {
@@ -36,7 +44,6 @@ body::before {
   background-size: 128px 128px;
 }
 
-/* HERO VIDEO */
 .hero-video-wrap {
   position: fixed;
   top: 0;
@@ -246,7 +253,308 @@ body::before {
   font-weight: 600;
 }
 
-/* HERO */
+/* PRIMEIRA SESSÃO: IMÓVEIS EM DESTAQUE + BUSCA */
+.first-section-container {
+  position: relative;
+  z-index: 2;
+  padding-top: 85px;
+  margin-bottom: 20px;
+}
+
+.properties-strip-section {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 30px;
+}
+
+.properties-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 0 20px;
+}
+
+.properties-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 7vw, 4rem);
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.properties-header p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #7eb8a0;
+  margin-top: 8px;
+}
+
+.strips-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+}
+
+.strips-viewport:active {
+  cursor: grabbing;
+}
+
+.strips-track {
+  display: flex;
+  will-change: transform;
+}
+
+.strip-item {
+  flex-shrink: 0;
+  width: 28vw;
+  min-width: 260px;
+  height: 75vh;
+  min-height: 480px;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(240, 236, 228, 0.08);
+  transition: width 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+  cursor: pointer;
+}
+
+.strip-item:hover {
+  width: 36vw;
+}
+
+.strip-item:hover .strip-img {
+  opacity: 0.9;
+  filter: grayscale(0%) brightness(1.05);
+  transform: scale(1);
+}
+
+.strip-item:hover .strip-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.strip-item:hover .strip-overlay {
+  opacity: 0.15;
+}
+
+.strip-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  transition: opacity 0.5s, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1), filter 0.5s;
+  transform: scale(1.03);
+  filter: grayscale(0.5) brightness(0.65) contrast(1.1);
+  z-index: 2;
+}
+
+.strip-overlay {
+  position: absolute;
+  inset: 0;
+  background: #070707;
+  opacity: 0.4;
+  transition: opacity 0.5s;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.strip-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1a2a1a, #0a0a0a);
+  z-index: 1;
+}
+
+.strip-label {
+  position: absolute;
+  bottom: 32px;
+  left: 24px;
+  right: 24px;
+  z-index: 10;
+  opacity: 0.85;
+  transform: translateY(12px);
+  transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
+}
+
+.strip-label h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(22px, 4vw, 32px);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.strip-label .prop-location {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #7eb8a0;
+  margin: 5px 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.strip-label .prop-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #00E87A;
+  margin-top: 8px;
+}
+
+.strip-label .prop-details {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.strip-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 232, 122, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  transition: all 0.2s;
+}
+
+.strip-arrow:hover {
+  background: #00E87A;
+  border-color: #fff;
+}
+
+.strip-arrow:hover svg {
+  stroke: #000;
+}
+
+.strip-arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+#strip-arrow-left {
+  left: 16px;
+}
+
+#strip-arrow-right {
+  right: 16px;
+}
+
+/* ===== SEARCH SECTION - UMA LINHA NO MOBILE E MAIS LARGA NO DESKTOP ===== */
+.search-section {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 20px auto 50px;
+  padding: 0 1rem;
+}
+
+.search-box {
+  background: rgba(8, 8, 12, 0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 232, 122, 0.5);
+  border-radius: 80px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.25rem 0.25rem 1.2rem;
+  transition: all 0.3s;
+}
+
+.search-box:hover {
+  border-color: #00E87A;
+  background: rgba(8, 8, 12, 0.95);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 0.75rem 0;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+.search-btn {
+  background: rgba(0, 232, 122, 0.2);
+  border: 1px solid rgba(0, 232, 122, 0.6);
+  padding: 0.5rem 1.2rem;
+  border-radius: 60px;
+  color: #00E87A;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.search-btn:hover {
+  background: #00E87A;
+  color: #070707;
+  border-color: white;
+}
+
+.search-clear {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-right: 0.2rem;
+}
+
+.search-clear:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+#searchResultMsg {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: #8bc6a4;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* SEGUNDA SESSÃO: PERFIL + CARROSSEL 3D */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -254,7 +562,7 @@ body::before {
   justify-content: center;
   position: relative;
   z-index: 2;
-  padding: 70px 6% 40px;
+  padding: 30px 6% 70px;
 }
 
 .hero-mobile-overlay {
@@ -288,7 +596,6 @@ body::before {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* PERFIL */
 .profile-info {
   flex: 1.2;
   min-width: 280px;
@@ -509,7 +816,6 @@ body::before {
   line-height: 1.2;
 }
 
-/* CARROSSEL */
 .carousel-wrapper {
   flex: 1.8;
   min-width: 400px;
@@ -554,7 +860,7 @@ body::before {
   flex-direction: column;
 }
 
-canvas {
+.carousel-shell canvas {
   width: 100%;
   height: 100%;
   display: block;
@@ -656,305 +962,6 @@ button:hover {
   border-radius: 30px;
 }
 
-/* SEÇÃO DE BUSCA CORRIGIDA - SEM DUPLICAÇÃO DE ÍCONE E BOTÃO COMPLETO */
-.search-section {
-  position: relative;
-  z-index: 2;
-  max-width: 1000px;
-  margin: 0 auto 30px;
-  padding: 0 1.5rem;
-}
-
-.search-box {
-  background: rgba(8, 8, 12, 0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 232, 122, 0.3);
-  border-radius: 80px;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.25rem 0.25rem 0.25rem 1.2rem;
-  transition: all 0.3s;
-}
-
-.search-box:hover {
-  border-color: #00E87A;
-  background: rgba(8, 8, 12, 0.85);
-}
-
-.search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 0.95rem;
-  padding: 0.8rem 0;
-  font-family: 'DM Sans', sans-serif;
-  outline: none;
-  min-width: 0;
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-  font-weight: 400;
-}
-
-.search-btn {
-  background: rgba(0, 232, 122, 0.15);
-  border: 1px solid rgba(0, 232, 122, 0.5);
-  padding: 0.6rem 1.5rem;
-  border-radius: 60px;
-  color: #00E87A;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.search-btn:hover {
-  background: #00E87A;
-  color: #070707;
-  border-color: white;
-}
-
-.search-clear {
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-  margin-right: 0.2rem;
-}
-
-.search-clear:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-}
-
-#searchResultMsg {
-  text-align: center;
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
-  color: #8bc6a4;
-  letter-spacing: 0.5px;
-  font-weight: 500;
-}
-
-/* IMÓVEIS EM DESTAQUE (STRIPS) */
-.properties-strip-section {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  margin: 10px auto 40px;
-  padding-top: 20px;
-}
-
-.properties-header {
-  text-align: center;
-  margin-bottom: 32px;
-  padding: 0 20px;
-}
-
-.properties-header h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2rem, 7vw, 4rem);
-  letter-spacing: 0.04em;
-  color: #ffffff;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-}
-
-.properties-header p {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: #7eb8a0;
-  margin-top: 8px;
-}
-
-.strips-viewport {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  cursor: grab;
-}
-
-.strips-viewport:active {
-  cursor: grabbing;
-}
-
-.strips-track {
-  display: flex;
-  will-change: transform;
-}
-
-.strip-item {
-  flex-shrink: 0;
-  width: 28vw;
-  min-width: 260px;
-  height: 75vh;
-  min-height: 480px;
-  position: relative;
-  overflow: hidden;
-  border-right: 1px solid rgba(240, 236, 228, 0.08);
-  transition: width 0.55s cubic-bezier(0.76, 0, 0.24, 1);
-  cursor: pointer;
-}
-
-.strip-item:hover {
-  width: 36vw;
-}
-
-.strip-item:hover .strip-img {
-  opacity: 0.9;
-  filter: grayscale(0%) brightness(1.05);
-  transform: scale(1);
-}
-
-.strip-item:hover .strip-label {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.strip-item:hover .strip-overlay {
-  opacity: 0.15;
-}
-
-.strip-img {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0.7;
-  transition: opacity 0.5s, transform 0.8s cubic-bezier(0.76, 0, 0.24, 1), filter 0.5s;
-  transform: scale(1.03);
-  filter: grayscale(0.5) brightness(0.65) contrast(1.1);
-  z-index: 2;
-}
-
-.strip-overlay {
-  position: absolute;
-  inset: 0;
-  background: #070707;
-  opacity: 0.4;
-  transition: opacity 0.5s;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.strip-fill {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #1a2a1a, #0a0a0a);
-  z-index: 1;
-}
-
-/* números removidos */
-
-.strip-label {
-  position: absolute;
-  bottom: 32px;
-  left: 24px;
-  right: 24px;
-  z-index: 10;
-  opacity: 0.85;
-  transform: translateY(12px);
-  transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
-}
-
-.strip-label h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(22px, 4vw, 32px);
-  letter-spacing: 0.03em;
-  line-height: 1.1;
-  color: #fff;
-}
-
-.strip-label .prop-location {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.15em;
-  color: #7eb8a0;
-  margin: 5px 0 4px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.strip-label .prop-price {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #00E87A;
-  margin-top: 8px;
-}
-
-.strip-label .prop-details {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.strip-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(0, 232, 122, 0.4);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 20;
-  transition: all 0.2s;
-}
-
-.strip-arrow:hover {
-  background: #00E87A;
-  border-color: #fff;
-}
-
-.strip-arrow:hover svg {
-  stroke: #000;
-}
-
-.strip-arrow svg {
-  width: 20px;
-  height: 20px;
-  stroke: #fff;
-  stroke-width: 2;
-}
-
-#strip-arrow-left {
-  left: 16px;
-}
-
-#strip-arrow-right {
-  right: 16px;
-}
-
-/* FORMULÁRIOS */
 .forms-section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1161,41 +1168,126 @@ footer {
   color: #fff;
 }
 
+/* ===== BOTÃO FLUTUANTE WHATSAPP - APENAS DESKTOP ===== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+  background-color: #128C7E;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: #fff;
+}
+
+.whatsapp-float i {
+  font-size: 32px;
+  color: white;
+}
+
+/* Esconder o botão flutuante no mobile */
+@media (max-width: 1023px) {
+  .whatsapp-float {
+    display: none;
+  }
+}
+
+/* ===== MOBILE FIXES ===== */
 @media (max-width: 768px) {
+  .first-section-container { padding-top: 75px; }
   .hero-mobile-overlay { display: block; }
-  .hero { min-height: 100svh; height: 100svh; padding: 70px 4% 12px; align-items: stretch; }
-  .unified-panel { flex-direction: column; padding: 10px 12px 12px; gap: 10px; background: rgba(6,6,10,0.82); border-radius: 28px; height: 100%; justify-content: flex-start; }
+  .hero { min-height: 100svh; height: auto; padding: 70px 4% 20px; align-items: stretch; }
+  .unified-panel { flex-direction: column; padding: 12px 12px 16px; gap: 12px; background: rgba(6,6,10,0.88); border-radius: 32px; height: auto; justify-content: flex-start; }
   .profile-info { flex: none; width: 100%; min-width: auto; }
-  .perfil-card-topo { padding: 12px 16px; gap: 6px; }
   #profile-canvas-container { width: 72px; height: 72px; border-radius: 12px; }
-  .profile-name { font-size: 17px; }
-  .stats-inline { gap: 0.6rem; margin-top: 0.3rem; }
-  .stat-mini { padding: 0.3rem 0.8rem; }
-  .stat-number-mini { font-size: 1.1rem; }
-  .stat-label-mini { font-size: 0.55rem; }
-  .perfil-card-contatos { display: none; }
-  .carousel-wrapper { flex: 1; width: 100%; min-width: auto; min-height: 0; }
-  .carousel-card { flex: 1; padding: 10px; border-radius: 18px; }
-  .carousel-shell { max-width: 100%; width: 100%; aspect-ratio: unset; flex: 1; min-height: 0; height: 100%; margin-bottom: 6px; }
-  .project-title { font-size: 22px; }
-  .search-section { padding: 0 1rem; margin: 10px auto 20px; }
-  .search-box { padding: 0.2rem 0.2rem 0.2rem 1rem; gap: 0.5rem; }
-  .search-input { font-size: 0.85rem; padding: 0.6rem 0; }
-  .search-btn { padding: 0.4rem 1rem; font-size: 0.75rem; gap: 0.3rem; }
-  .search-clear { width: 30px; height: 30px; font-size: 0.8rem; }
-  .forms-section { grid-template-columns: 1fr; gap: 1.5rem; margin: 2rem auto; padding: 0 1rem; }
+  .profile-name { font-size: 20px; }
+  .stats-inline { gap: 0.5rem; margin-top: 0.4rem; width: 100%; justify-content: center; }
+  .stat-mini { padding: 0.25rem 0.7rem; background: rgba(0,0,0,0.5); }
+  .stat-number-mini { font-size: 1rem; }
+  .stat-label-mini { font-size: 0.55rem; letter-spacing: 0.5px; }
+  .carousel-wrapper { flex: auto; width: 100%; min-width: auto; min-height: auto; margin-top: 6px; }
+  .carousel-shell { aspect-ratio: unset; height: 320px; margin-bottom: 16px; }
+  .carousel-shell canvas { border-radius: 20px; }
+  #nav { bottom: 12px; gap: 12px; }
+  button { width: 38px; height: 38px; font-size: 22px; background: rgba(0,0,0,0.7); }
+  #label { font-size: 11px; padding: 4px 12px; top: 12px; white-space: nowrap; background: rgba(0,0,0,0.65); }
+  .project-title { font-size: 24px; }
+  .project-subtitle { font-size: 11px; }
+  .strip-item { width: 65vw; min-height: 380px; height: 55vh; }
+  .strip-item:hover { width: 75vw; }
+  
+  /* SEARCH MOBILE - UMA ÚNICA LINHA HORIZONTAL */
+  .search-section {
+    padding: 0 0.5rem;
+  }
+  .search-box {
+    gap: 0.3rem;
+    padding: 0.15rem 0.15rem 0.15rem 0.6rem;
+    border-radius: 60px;
+  }
+  .search-input {
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+    min-width: 40px;
+  }
+  .search-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+    gap: 0.2rem;
+  }
+  .search-clear {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    margin-right: 0;
+  }
+  #searchResultMsg {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
+  
+  .forms-section { grid-template-columns: 1fr; gap: 1.5rem; margin: 2rem auto; }
   .form-card { padding: 1.5rem; }
   .form-card h3 { font-size: 1.6rem; }
-  .strip-item { width: 65vw; min-height: 400px; height: 60vh; }
-  .strip-item:hover { width: 75vw; }
-  .strip-arrow { width: 38px; height: 38px; }
-  footer { flex-direction: column; text-align: center; align-items: center; }
-  .footer-contato-mobile { display: flex; }
+  .form-group-row { flex-direction: column; gap: 1rem; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .nav-whatsapp { padding: 8px 12px; gap: 0; }
   .nav-whatsapp span { display: none; }
-  .nav-whatsapp i { font-size: 20px; margin: 0; }
+  .footer-contato-mobile { display: flex; }
+  .perfil-card-contatos { display: none; }
+}
+
+/* Ajuste para desktop: mais largura na busca */
+@media (min-width: 1024px) {
+  .search-section {
+    max-width: 1400px;
+    padding: 0 2rem;
+  }
+  .search-box {
+    padding: 0.3rem 0.3rem 0.3rem 1.5rem;
+  }
+  .search-input {
+    font-size: 1rem;
+  }
+  .search-btn {
+    padding: 0.6rem 1.8rem;
+    font-size: 0.95rem;
+  }
 }
 </style>
 </head>
@@ -1211,7 +1303,7 @@ footer {
 <canvas id="three-bg"></canvas>
 
 <nav class="navbar">
-  <a href="#" class="nav-logo"><img src="logo.png" alt="Josué Afonso" class="nav-logo-mark" /></a>
+  <a href="#" class="nav-logo"><img src="logo.png" alt="Josué Afonso" class="nav-logo-mark" onerror="this.style.display='none'"/></a>
   <ul class="nav-links">
     <li><a href="#" class="active">Início</a></li>
     <li><a href="#buscar">Buscar Imóvel</a></li>
@@ -1233,7 +1325,24 @@ footer {
   <a href="https://wa.me/5566996700226" target="_blank" class="mobile-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 </div>
 
-<!-- SESSÃO INICIAL (HERO) -->
+<!-- PRIMEIRA SESSÃO: IMÓVEIS EM DESTAQUE + BUSCA -->
+<div class="first-section-container">
+  <section class="properties-strip-section" id="imoveis">
+    <div class="properties-header"><h2>IMÓVEIS EM DESTAQUE</h2><p>Selecionados especialmente para você</p></div>
+    <div class="strips-viewport" id="propStripsViewport"><div class="strips-track" id="propStripsTrack"></div><div class="strip-arrow" id="strip-arrow-left"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="strip-arrow" id="strip-arrow-right"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></div>
+  </section>
+  
+  <section class="search-section" id="buscar">
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar por título, localização, preço..." autocomplete="off">
+      <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Buscar</button>
+      <button id="clearSearchBtn" class="search-clear" title="Limpar busca"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="searchResultMsg"></div>
+  </section>
+</div>
+<hr>
+<!-- SEGUNDA SESSÃO: PERFIL + CARROSSEL 3D -->
 <section class="hero">
   <div class="unified-panel">
     <div class="profile-info">
@@ -1245,8 +1354,7 @@ footer {
         <a href="https://wa.me/5566996700226" target="_blank" class="topo-whatsapp"><i class="fab fa-whatsapp"></i> (66) 99670-0226</a>
         <div class="stats-inline">
           <div class="stat-mini"><div class="stat-number-mini">500+</div><div class="stat-label-mini">Imóveis Vendidos</div></div>
-          <div class="stat-mini"><div class="stat-number-mini">12</div><div class="stat-label-mini">Anos de Experiência</div></div>
-          <div class="stat-mini"><div class="stat-number-mini">MT</div><div class="stat-label-mini">Mato Grosso</div></div>
+          <div class="stat-mini"><div class="stat-number-mini">12+</div><div class="stat-label-mini">Anos de Experiência</div></div>
         </div>
       </div>
       <div class="perfil-card-contatos">
@@ -1259,23 +1367,7 @@ footer {
     <div class="carousel-wrapper"><div class="carousel-card"><div class="carousel-shell"><canvas id="carousel-canvas"></canvas><div id="label"></div><div id="nav"><button id="prev">‹</button><div id="dots"></div><button id="next">›</button></div></div><div class="project-metadata"><div class="project-title" id="dynamicTitle">Apartamento Luxo</div><div class="project-subtitle" id="dynamicSubtitle">R$ 520.000</div></div></div></div>
   </div>
 </section>
-
-<!-- SEÇÃO DE BUSCA CORRIGIDA - SEM ÍCONE DUPLICADO, BOTÃO COMPLETO -->
-<section class="search-section" id="buscar">
-  <div class="search-box">
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar por título, localização, preço ou características... Ex: Cobertura, Jardim, 520.000" autocomplete="off">
-    <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Buscar</button>
-    <button id="clearSearchBtn" class="search-clear" title="Limpar busca"><i class="fas fa-times"></i></button>
-  </div>
-  <div id="searchResultMsg"></div>
-</section>
-
-<!-- IMÓVEIS EM DESTAQUE -->
-<section class="properties-strip-section" id="imoveis">
-  <div class="properties-header"><h2>IMÓVEIS EM DESTAQUE</h2><p>Selecionados especialmente para você</p></div>
-  <div class="strips-viewport" id="propStripsViewport"><div class="strips-track" id="propStripsTrack"></div><div class="strip-arrow" id="strip-arrow-left"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div><div class="strip-arrow" id="strip-arrow-right"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></div></div>
-</section>
-
+<hr>
 <!-- FORMULÁRIOS -->
 <section class="forms-section">
   <div class="form-card"><h3>Quero Anunciar</h3><p class="desc">Envie os dados do seu imóvel e receba uma análise personalizada.</p><form id="form-sell"><div class="form-group"><label>Nome completo *</label><input type="text" id="sell-name" required></div><div class="form-group"><label>Telefone/WhatsApp *</label><input type="tel" id="sell-phone" required></div><div class="form-group"><label>E-mail</label><input type="email" id="sell-email"></div><div class="form-group"><label>Endereço do Imóvel</label><input type="text" id="sell-address"></div><div class="form-group"><label>Detalhes (área, quartos, etc)</label><textarea rows="2" id="sell-details"></textarea></div><button type="submit" class="submit-btn"><i class="fab fa-whatsapp"></i> Enviar pelo WhatsApp</button></form></div>
@@ -1284,14 +1376,22 @@ footer {
 
 <footer id="contato"><div>© 2026 Josué Afonso · Corretor de Imóveis</div><div class="footer-links"><a href="#">Início</a><a href="#buscar">Buscar</a><a href="#imoveis">Imóveis</a><a href="#contato">Contato</a></div><div class="footer-social"><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a><a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a></div><div class="footer-contato-mobile"><a href="https://wa.me/5566996700226" target="_blank"><i class="fab fa-whatsapp"></i> (66) 99670-0226</a><a href="mailto:josueafonsocorretor@gmail.com"><i class="fas fa-envelope"></i> josueafonsocorretor@gmail.com</a><span><i class="fas fa-map-marker-alt"></i> Mato Grosso — Brasil</span></div></footer>
 
+<!-- BOTÃO FLUTUANTE WHATSAPP (DESKTOP) -->
+<a href="https://wa.me/5566996700226" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script type="module">
+  // (Código Three.js, carrossel, strips e formulários mantidos integralmente como na versão anterior)
   import * as THREE from 'three';
+  
+  // Mobile menu
   const hamburger = document.getElementById('hamburger'), mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => { mobileMenu.classList.toggle('open'); hamburger.classList.toggle('open'); });
   mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mobileMenu.classList.remove('open'); hamburger.classList.remove('open'); }));
   
-  // Fundo partículas
+  // Fundo partículas (Three.js)
   const bgScene = new THREE.Scene(), bgCamera = new THREE.PerspectiveCamera(70, window.innerWidth/window.innerHeight, 0.1, 1000);
   const bgCanvas = document.getElementById('three-bg'), bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true });
   bgRenderer.setSize(window.innerWidth, window.innerHeight); bgCamera.position.z = 5;
@@ -1306,7 +1406,7 @@ footer {
   let mouseX=0,mouseY=0; document.addEventListener('mousemove',(e)=>{ mouseX=(e.clientX/window.innerWidth-0.5)*0.5; mouseY=(e.clientY/window.innerHeight-0.5)*0.3; });
   function bgAnimate(){ requestAnimationFrame(bgAnimate); stars.rotation.y+=0.0005; stars.rotation.x+=0.0003; stars2.rotation.y-=0.0004; stars2.rotation.x+=0.0002; bgCamera.position.x+=(mouseX-bgCamera.position.x)*0.05; bgCamera.position.y+=(-mouseY-bgCamera.position.y)*0.05; bgCamera.lookAt(bgScene.position); bgRenderer.render(bgScene,bgCamera); } bgAnimate();
 
-  // Perfil cubo
+  // Perfil cubo 3D
   const container = document.getElementById('profile-canvas-container');
   const cubeScene = new THREE.Scene(), cubeCamera = new THREE.PerspectiveCamera(45,1,0.1,100); cubeCamera.position.set(0,0,3.2);
   const cubeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); cubeRenderer.setSize(180,180); cubeRenderer.setClearColor(0x000000,0);
@@ -1322,13 +1422,14 @@ footer {
   let time=0; function animateCube(){ requestAnimationFrame(animateCube); time+=0.012; cube.rotation.y=time*0.5; cube.rotation.x=Math.sin(time*0.3)*0.2; cube.rotation.z=Math.cos(time*0.2)*0.1; cubeRenderer.render(cubeScene,cubeCamera); } animateCube();
   function resizeCubeCanvas(){ const size=container.clientWidth; cubeRenderer.setSize(size,size); cubeCamera.aspect=1; cubeCamera.updateProjectionMatrix(); } window.addEventListener('resize',resizeCubeCanvas); resizeCubeCanvas();
 
-  // Carrossel 3D (código mantido)
+  // Carrossel 3D
   const canvasCarousel = document.getElementById('carousel-canvas');
   const renderer = new THREE.WebGLRenderer({ canvas: canvasCarousel, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)); renderer.toneMapping = THREE.ReinhardToneMapping; renderer.toneMappingExposure = 0.68;
   const sceneCarousel = new THREE.Scene(); sceneCarousel.background = null;
   const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100); camera.position.set(0,0,6);
-  const textureLoader = new THREE.TextureLoader(); const imoveisCarrossel = [ { title:"Apartamento Luxo", price:"R$ 520.000", location:"Centro, Cuiabá", area:"120m²", beds:3, baths:2, image:"https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800" }, { title:"Casa com Piscina", price:"R$ 890.000", location:"Jardim Europa, Várzea Grande", area:"250m²", beds:4, baths:3, image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" }, { title:"Cobertura Duplex", price:"R$ 1.250.000", location:"Bairro Alto, Cuiabá", area:"180m²", beds:3, baths:3, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" }, { title:"Flat Moderno", price:"R$ 320.000", location:"Centro Norte, Cuiabá", area:"55m²", beds:1, baths:1, image:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800" } ];
+  const textureLoader = new THREE.TextureLoader(); 
+  const imoveisCarrossel = [ { title:"Apartamento Luxo", price:"R$ 520.000", location:"Centro, Cuiabá", area:"120m²", beds:3, baths:2, image:"https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800" }, { title:"Casa com Piscina", price:"R$ 890.000", location:"Jardim Europa, Várzea Grande", area:"250m²", beds:4, baths:3, image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" }, { title:"Cobertura Duplex", price:"R$ 1.250.000", location:"Bairro Alto, Cuiabá", area:"180m²", beds:3, baths:3, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800" }, { title:"Flat Moderno", price:"R$ 320.000", location:"Centro Norte, Cuiabá", area:"55m²", beds:1, baths:1, image:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800" } ];
   const groups = [], RADIUS=5.5, BASE_H=3.2; const texturasCards = imoveisCarrossel.map(imovel => textureLoader.load(imovel.image));
   function makeCard(index) { const group=new THREE.Group(), w=BASE_H*1.2, geo=new THREE.PlaneGeometry(w,BASE_H,32,32); const material=new THREE.MeshStandardMaterial({ map:texturasCards[index], color:0xaaaaaa, transparent:true, opacity:0, side:THREE.DoubleSide, roughness:0.55, metalness:0.02 }); const mesh=new THREE.Mesh(geo,material); mesh.name="mainMesh"; group.add(mesh); sceneCarousel.add(group); return group; }
   imoveisCarrossel.forEach((_,idx) => groups.push(makeCard(idx)));
@@ -1357,12 +1458,11 @@ footer {
   function resizeCar(){ if(canvasCarousel){renderer.setSize(canvasCarousel.clientWidth,canvasCarousel.clientHeight,false); camera.aspect=canvasCarousel.clientWidth/canvasCarousel.clientHeight; camera.updateProjectionMatrix();} }
   window.addEventListener('resize',resizeCar); resizeCar(); updateDots(); animateCarousel(performance.now());
 
-  // Propriedades (base)
+  // Propriedades para os strips
   const properties = [ {title:"Apartamento Luxo",location:"Centro, Cuiabá",price:"R$ 520.000",area:"120m²",beds:3,baths:2,image:"https://images.unsplash.com/photo-1567496898669-ee935f5f647a?w=800"}, {title:"Casa com Piscina",location:"Jardim Europa, Várzea Grande",price:"R$ 890.000",area:"250m²",beds:4,baths:3,image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"}, {title:"Cobertura Duplex",location:"Bairro Alto, Cuiabá",price:"R$ 1.250.000",area:"180m²",beds:3,baths:3,image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800"}, {title:"Terreno Comercial",location:"Av. Historiador, Cuiabá",price:"R$ 450.000",area:"500m²",beds:0,baths:0,image:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800"}, {title:"Sítio com Lazer",location:"Chapada dos Guimarães",price:"R$ 1.980.000",area:"10.000m²",beds:5,baths:4,image:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800"}, {title:"Flat Moderno",location:"Centro Norte, Cuiabá",price:"R$ 320.000",area:"55m²",beds:1,baths:1,image:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800"} ];
   const trackProp = document.getElementById('propStripsTrack');
   const SETS_PROP = 3;
   let allStrips = [];
-
   function buildStrips() {
     trackProp.innerHTML = '';
     allStrips = [];
@@ -1384,12 +1484,11 @@ footer {
   }
   buildStrips();
 
-  // Lógica de busca
+  // Filtro de busca
   const searchInput = document.getElementById('searchInput');
   const searchBtn = document.getElementById('searchBtn');
   const clearBtn = document.getElementById('clearSearchBtn');
   const resultMsg = document.getElementById('searchResultMsg');
-
   function filterProperties() {
     const term = searchInput.value.trim().toLowerCase();
     let visibleCount = 0;
@@ -1410,16 +1509,11 @@ footer {
       resultMsg.style.display = 'none';
     }
   }
-
   searchBtn.addEventListener('click', filterProperties);
-  clearBtn.addEventListener('click', () => {
-    searchInput.value = '';
-    filterProperties();
-    searchInput.focus();
-  });
+  clearBtn.addEventListener('click', () => { searchInput.value = ''; filterProperties(); searchInput.focus(); });
   searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') filterProperties(); });
 
-  // Scroll strips
+  // Scroll horizontal dos strips
   const viewportProp = document.getElementById('propStripsViewport');
   let scrollProp = 0, speedProp = 0.45, draggingProp = false, dragStartPropX = 0, dragStartScrollProp = 0;
   const getStripItemWidth = () => { const s = trackProp.querySelector('.strip-item'); return s ? s.offsetWidth : 320; };
