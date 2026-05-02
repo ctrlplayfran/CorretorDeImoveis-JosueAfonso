@@ -67,7 +67,7 @@ body::before {
   pointer-events: none;
 }
 
-/* ===== NAVBAR (inalterada) ===== */
+/* ===== NAVBAR ===== */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -422,7 +422,7 @@ body::before {
 #strip-arrow-left { left: 16px; }
 #strip-arrow-right { right: 16px; }
 
-/* ===== SEARCH SECTION — CORREÇÃO RADICAL ===== */
+/* ===== SEARCH SECTION — REESCRITA TOTAL ===== */
 .search-section {
   position: relative;
   z-index: 2;
@@ -431,12 +431,16 @@ body::before {
   padding: 0 1rem;
 }
 
+@media (min-width: 1024px) {
+  .search-section { max-width: 1400px; padding: 0 2rem; }
+}
+
 .search-card {
   background: rgba(8, 8, 12, 0.82);
   backdrop-filter: blur(18px);
   border: 1px solid rgba(0, 232, 122, 0.35);
   border-radius: 28px;
-  padding: 1rem;
+  padding: 1.4rem 1.6rem;
 }
 
 .search-title {
@@ -445,7 +449,7 @@ body::before {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: #7eb8a0;
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -453,259 +457,229 @@ body::before {
 
 .search-title::before {
   content: '';
-  display: inline-block;
   width: 18px; height: 1px;
   background: #00E87A;
   opacity: 0.6;
+  flex-shrink: 0;
 }
 
-/* Linha principal: em mobile, empilha para nunca transbordar */
-.search-main-row {
+/* ── Linha do input: pill largo + botão FORA do pill ── */
+.sb-row {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 60px;
-  padding: 4px 6px 4px 16px;
-  transition: border-color 0.25s;
-  margin-bottom: 0.8rem;
+  align-items: stretch;
+  gap: 10px;
+  margin-bottom: 12px;
   width: 100%;
 }
 
-.search-main-row:focus-within {
-  border-color: rgba(0, 232, 122, 0.6);
-}
-
-.search-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 0.9rem;
-  padding: 0.6rem 0;
-  font-family: 'DM Sans', sans-serif;
-  outline: none;
-  min-width: 50px;
-}
-
-.search-input::placeholder { color: rgba(255,255,255,0.38); }
-
-.search-clear {
-  background: transparent;
-  border: none;
-  color: rgba(255,255,255,0.4);
-  font-size: 0.85rem;
-  cursor: pointer;
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-
-.search-clear:hover {
-  background: rgba(255,255,255,0.12);
-  color: #fff;
-}
-
-.search-btn {
-  background: rgba(0,232,122,0.18);
-  border: 1px solid rgba(0,232,122,0.5);
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  color: #00E87A;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.search-btn:hover {
-  background: #00E87A;
-  color: #070707;
-  border-color: #fff;
-}
-
-/* Container de filtros: SCROLL HORIZONTAL — nunca encavalado */
-.search-filters {
+/* O pill contém apenas ícone + input + X */
+.sb-pill {
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 50px;
+  padding: 0 14px 0 18px;
+  height: 48px;
+  transition: border-color 0.2s;
+}
+
+.sb-pill:focus-within {
+  border-color: rgba(0,232,122,0.6);
+}
+
+.sb-pill i.fa-search {
+  color: rgba(255,255,255,0.3);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.sb-pill input {
+  flex: 1 1 0;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.sb-pill input::placeholder { color: rgba(255,255,255,0.35); }
+
+.sb-pill .sb-clear {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  cursor: pointer;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.sb-pill .sb-clear:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+/* O botão Buscar é um elemento IRMÃO do pill, não dentro dele */
+.sb-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 24px;
+  height: 48px;
+  background: rgba(0,232,122,0.15);
+  border: 1px solid rgba(0,232,122,0.5);
+  border-radius: 50px;
+  color: #00E87A;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.sb-btn:hover {
+  background: #00E87A;
+  color: #070707;
+  border-color: #00E87A;
+}
+
+/* ── Linha dos filtros: scroll horizontal ── */
+.sb-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   overflow-x: auto;
-  overflow-y: visible;
-  padding: 6px 0 10px;
+  overflow-y: hidden;
+  padding-bottom: 6px;
   scrollbar-width: thin;
+  scrollbar-color: rgba(0,232,122,0.35) transparent;
   -webkit-overflow-scrolling: touch;
 }
 
-.search-filters::-webkit-scrollbar {
-  height: 4px;
-}
-.search-filters::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.05);
-  border-radius: 4px;
-}
-.search-filters::-webkit-scrollbar-thumb {
-  background: rgba(0,232,122,0.5);
-  border-radius: 4px;
-}
+.sb-filters::-webkit-scrollbar { height: 3px; }
+.sb-filters::-webkit-scrollbar-thumb { background: rgba(0,232,122,0.35); border-radius: 3px; }
 
-.filter-label {
+.sb-filter-label {
+  font-family: 'DM Sans', sans-serif;
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.45);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.filter-select {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+.sb-select {
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 28px 0 12px;
+  background-color: rgba(255,255,255,0.06);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5'%3E%3Cpath d='M0 0l4.5 5L9 0z' fill='rgba(255,255,255,0.35)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  border: 1px solid rgba(255,255,255,0.13);
   border-radius: 50px;
   color: rgba(255,255,255,0.75);
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem;
-  padding: 0.25rem 1.4rem 0.25rem 0.8rem;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.2s;
-  flex-shrink: 0;
+  font-size: 0.74rem;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.3)'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  transition: border-color 0.2s;
 }
 
-.filter-select option {
-  background: #111;
-  color: #fff;
-}
+.sb-select option { background: #111; color: #fff; }
 
-.filter-select:focus,
-.filter-select:hover {
+.sb-select:hover,
+.sb-select:focus {
   border-color: rgba(0,232,122,0.45);
   color: #fff;
 }
 
-.filter-divider {
-  width: 1px; height: 18px;
-  background: rgba(255,255,255,0.1);
+.sb-divider {
   flex-shrink: 0;
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,0.1);
 }
 
-.filter-chip {
+.sb-chip {
+  flex-shrink: 0;
+  height: 34px;
+  padding: 0 13px;
   background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.13);
   border-radius: 50px;
   color: rgba(255,255,255,0.65);
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 0.74rem;
   white-space: nowrap;
-  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
 
-.filter-chip:hover,
-.filter-chip.active {
+.sb-chip:hover,
+.sb-chip.active {
+  background: rgba(0,232,122,0.12);
   border-color: rgba(0,232,122,0.5);
   color: #00E87A;
-  background: rgba(0,232,122,0.1);
 }
 
 #searchResultMsg {
   text-align: center;
-  margin-top: 0.7rem;
+  margin-top: 8px;
   font-size: 0.78rem;
   color: #8bc6a4;
-  letter-spacing: 0.3px;
   font-weight: 500;
   display: none;
 }
 
-/* Desktop maior */
-@media (min-width: 1024px) {
-  .search-section { max-width: 1400px; padding: 0 2rem; }
-  .search-card { padding: 1.2rem 1.5rem; }
-  .search-btn { padding: 0.55rem 1.2rem; font-size: 0.85rem; }
-}
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .search-card { padding: 0.9rem 1rem; border-radius: 22px; }
 
-/* Mobile: empilha a barra (input + botão) para evitar qualquer overflow */
-@media (max-width: 640px) {
-  .search-section { padding: 0 0.5rem; }
-  .search-card { padding: 0.8rem; border-radius: 24px; }
-  
-  .search-main-row {
-    flex-wrap: wrap;
-    background: transparent;
-    border: none;
-    padding: 0;
-    gap: 0.5rem;
-  }
-  
-  .search-input {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 50px;
-    padding: 0.7rem 1rem;
-    flex: 1 1 100%;
-  }
-  
-  .search-clear {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    z-index: 1;
-  }
-  
-  .search-main-row .fa-search:first-child {
-    display: none;
-  }
-  
-  .search-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 0.7rem;
-    background: rgba(0,232,122,0.2);
-  }
-  
-  .search-filters {
+  /* No mobile: pill ocupa 100%, botão abaixo ocupando 100% */
+  .sb-row {
+    flex-direction: column;
     gap: 8px;
-    padding-bottom: 8px;
-    margin-top: 4px;
   }
-  
-  .filter-select {
-    font-size: 0.7rem;
-    padding: 0.25rem 1.2rem 0.25rem 0.7rem;
+
+  .sb-pill {
+    width: 100%;
+    height: 46px;
   }
-  
-  .filter-chip {
-    font-size: 0.7rem;
-    padding: 3px 8px;
+
+  .sb-btn {
+    width: 100%;
+    height: 46px;
+    justify-content: center;
+    border-radius: 50px;
   }
 }
 
-/* ===== SEGUNDA SESSÃO: PERFIL + CARROSSEL (mesmo código, sem alterações) ===== */
+/* ===== SEGUNDA SESSÃO: PERFIL + CARROSSEL ===== */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -1054,6 +1028,15 @@ button:hover {
   border-color: white;
 }
 
+/* RESET para botoes da secao de busca */
+button.sb-btn { width:auto!important; height:48px!important; border-radius:50px!important; font-size:0.85rem!important; backdrop-filter:none!important; flex-shrink:0!important; display:inline-flex!important; align-items:center!important; gap:7px!important; padding:0 24px!important; background:rgba(0,232,122,0.15)!important; border:1px solid rgba(0,232,122,0.5)!important; color:#00E87A!important; font-family:'DM Sans',sans-serif!important; font-weight:600!important; white-space:nowrap!important; cursor:pointer!important; line-height:1!important; }
+button.sb-btn:hover { background:#00E87A!important; color:#070707!important; border-color:#00E87A!important; }
+button.sb-clear { width:26px!important; height:26px!important; border-radius:50%!important; background:transparent!important; border:none!important; color:rgba(255,255,255,0.35)!important; font-size:12px!important; padding:0!important; display:flex!important; align-items:center!important; justify-content:center!important; backdrop-filter:none!important; flex-shrink:0!important; }
+button.sb-clear:hover { background:rgba(255,255,255,0.1)!important; color:#fff!important; }
+button.sb-chip { width:auto!important; height:34px!important; padding:0 13px!important; background:rgba(255,255,255,0.06)!important; border:1px solid rgba(255,255,255,0.13)!important; border-radius:50px!important; color:rgba(255,255,255,0.65)!important; font-family:'DM Sans',sans-serif!important; font-size:0.74rem!important; white-space:nowrap!important; cursor:pointer!important; display:inline-flex!important; align-items:center!important; flex-shrink:0!important; backdrop-filter:none!important; }
+button.sb-chip:hover, button.sb-chip.active { background:rgba(0,232,122,0.12)!important; border-color:rgba(0,232,122,0.5)!important; color:#00E87A!important; }
+@media(max-width:600px){ button.sb-btn{ width:100%!important; justify-content:center!important; } }
+
 #dots {
   display: flex;
   gap: 10px;
@@ -1314,7 +1297,7 @@ footer {
   .whatsapp-float { display: none; }
 }
 
-/* ===== MOBILE FIXES (para o resto da página) ===== */
+/* ===== MOBILE FIXES ===== */
 @media (max-width: 768px) {
   .first-section-container { padding-top: 75px; }
   .hero-mobile-overlay { display: block; }
@@ -1405,28 +1388,31 @@ footer {
     </div>
   </section>
 
-  <!-- BUSCA CORRIGIDA (finalmente sem encavalamento) -->
+  <!-- BUSCA -->
   <section class="search-section" id="buscar">
     <div class="search-card">
       <div class="search-title">Encontrar imóvel</div>
 
-      <div class="search-main-row">
-        <i class="fas fa-search" style="color:rgba(255,255,255,0.3);font-size:13px;flex-shrink:0;"></i>
-        <input type="text" id="searchInput" class="search-input"
-          placeholder="Buscar por nome, bairro, área..." autocomplete="off">
-        <button id="clearSearchBtn" class="search-clear" title="Limpar busca">
-          <i class="fas fa-times"></i>
-        </button>
-        <button id="searchBtn" class="search-btn">
+      <!-- Pill (input) + Botão como irmãos no mesmo flex row -->
+      <div class="sb-row">
+        <div class="sb-pill">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput"
+            placeholder="Buscar por nome, bairro, área..." autocomplete="off">
+          <button id="clearSearchBtn" class="sb-clear" title="Limpar">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <button id="searchBtn" class="sb-btn">
           <i class="fas fa-search"></i> Buscar
         </button>
       </div>
 
-      <!-- Filtros com scroll horizontal (nunca quebram/encavalem) -->
-      <div class="search-filters">
-        <span class="filter-label">Filtrar:</span>
+      <!-- Filtros com scroll horizontal -->
+      <div class="sb-filters">
+        <span class="sb-filter-label">Filtrar:</span>
 
-        <select id="filterTipo" class="filter-select" title="Tipo de imóvel">
+        <select id="filterTipo" class="sb-select" title="Tipo de imóvel">
           <option value="">Tipo</option>
           <option value="apartamento">Apartamento</option>
           <option value="casa">Casa</option>
@@ -1436,25 +1422,25 @@ footer {
           <option value="flat">Flat</option>
         </select>
 
-        <select id="filterCidade" class="filter-select" title="Cidade">
+        <select id="filterCidade" class="sb-select" title="Cidade">
           <option value="">Cidade</option>
           <option value="cuiabá">Cuiabá</option>
           <option value="várzea grande">Várzea Grande</option>
           <option value="chapada">Chapada</option>
         </select>
 
-        <select id="filterPreco" class="filter-select" title="Faixa de preço">
+        <select id="filterPreco" class="sb-select" title="Faixa de preço">
           <option value="">Preço</option>
           <option value="500000">Até R$ 500k</option>
           <option value="1000000">Até R$ 1M</option>
           <option value="2000000">Até R$ 2M</option>
         </select>
 
-        <div class="filter-divider"></div>
+        <div class="sb-divider"></div>
 
-        <button class="filter-chip" data-quartos="1">1+ quarto</button>
-        <button class="filter-chip" data-quartos="3">3+ quartos</button>
-        <button class="filter-chip" data-quartos="4">4+ quartos</button>
+        <button class="sb-chip" data-quartos="1">1+ quarto</button>
+        <button class="sb-chip" data-quartos="3">3+ quartos</button>
+        <button class="sb-chip" data-quartos="4">4+ quartos</button>
       </div>
 
       <div id="searchResultMsg"></div>
@@ -1583,7 +1569,7 @@ footer {
 <script type="module">
 import * as THREE from 'three';
 
-// ===== MOBILE MENU (mesmo código funcional) =====
+// ===== MOBILE MENU =====
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburger.addEventListener('click', () => {
@@ -1698,7 +1684,7 @@ function resizeCubeCanvas() {
 window.addEventListener('resize', resizeCubeCanvas);
 resizeCubeCanvas();
 
-// ===== CARROSSEL 3D (mantido) =====
+// ===== CARROSSEL 3D =====
 const canvasCarousel = document.getElementById('carousel-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas:canvasCarousel, antialias:true, alpha:true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
@@ -1942,12 +1928,12 @@ clearBtn.addEventListener('click', () => {
   filterCidade.value = '';
   filterPreco.value  = '';
   activeQuartos      = null;
-  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.sb-chip').forEach(c => c.classList.remove('active'));
   filterProperties();
   searchInput.focus();
 });
 
-document.querySelectorAll('.filter-chip[data-quartos]').forEach(chip => {
+document.querySelectorAll('.sb-chip[data-quartos]').forEach(chip => {
   chip.addEventListener('click', () => {
     const val = parseInt(chip.getAttribute('data-quartos'));
     if(activeQuartos === val) {
@@ -1955,7 +1941,7 @@ document.querySelectorAll('.filter-chip[data-quartos]').forEach(chip => {
       chip.classList.remove('active');
     } else {
       activeQuartos = val;
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.sb-chip').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
     }
     filterProperties();
